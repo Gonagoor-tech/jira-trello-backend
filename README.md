@@ -1,8 +1,6 @@
 # jira-trello-backend
 FastAPI backend for JIRA to Trello migration tool
 
-# 🚀 JIRA to Trello Migration Backend
-
 ### Prerequisites
 - Python 3.8+
 - Git
