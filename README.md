@@ -11,7 +11,7 @@ FastAPI backend for JIRA to Trello migration tool
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/jira-trello-backend.git
+git clone https://github.com/Gonagoor-tech/jira-trello-backend.git
 cd jira-trello-backend
 
 # Create virtual environment
