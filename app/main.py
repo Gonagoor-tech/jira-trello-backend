@@ -1,3 +1,9 @@
+from dotenv import load_dotenv
+import os
+
+# Load .env before importing any service/routers that depend on env variables
+load_dotenv()
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import auth, jira, trello, migration
@@ -8,6 +14,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
+# CORS setup for frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
@@ -16,15 +23,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Routers
 app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
-app.include_router(jira.router, prefix="/jira", tags=["JIRA"])
+app.include_router(jira.router)   # Jira endpoints
 app.include_router(trello.router, prefix="/trello", tags=["Trello"])
 app.include_router(migration.router, prefix="/migration", tags=["Migration"])
 
 @app.get("/")
 async def root():
-    return {"message": "🚀 JIRA to Trello Migration API is LIVE!", "status": "ready", "time": "3:58 AM"}
+    return {
+        "message": "🚀 JIRA to Trello Migration API is LIVE!",
+        "status": "ready",
+        "time": "3:58 AM"
+    }
 
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy", "timestamp": "2025-08-20T03:58:00", "database": "ready"}
+    return {
+        "status": "healthy",
+        "timestamp": "2025-08-20T03:58:00",
+        "database": "ready"
+    }

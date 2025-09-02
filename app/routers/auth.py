@@ -9,7 +9,7 @@ class LoginRequest(BaseModel):
 
 @router.post("/login")
 async def login(request: LoginRequest):
-    if request.email == "test@example.com" and request.password == "password":
+    if request.email == "rahul.goudar@gonagoor.com" and request.password == "password":
         return {"access_token": "fake-jwt-token", "token_type": "bearer", "user_email": request.email}
     raise HTTPException(status_code=401, detail="Invalid credentials")
 

@@ -1,22 +1,20 @@
 from fastapi import APIRouter
+from app.services import jira_service
 
-router = APIRouter()
+router = APIRouter(prefix="/jira", tags=["JIRA"])
 
 @router.get("/projects")
 async def get_jira_projects():
-    return [
-        {"key": "TEST", "name": "Test Project", "id": "10001"},
-        {"key": "DEMO", "name": "Demo Project", "id": "10002"}
-    ]
-
-@router.post("/test-connection")
-async def test_jira_connection():
-    return {"status": "success", "message": "JIRA connection successful"}
+    return await jira_service.fetch_jira_projects()
 
 @router.get("/issues/{project_key}")
 async def get_jira_issues(project_key: str):
-    return {
-        "project": project_key,
-        "total": 25,
-        "issues": [{"key": f"{project_key}-1", "summary": "Sample issue", "status": "To Do"}]
-    }
+    return await jira_service.fetch_jira_issues(project_key)
+
+@router.post("/test-connection")
+async def test_jira_connection():
+    try:
+        projects = await jira_service.fetch_jira_projects()
+        return {"status": "success", "project_count": projects.get("total", 0)}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
